@@ -9,6 +9,10 @@ let template = Template(
     ],
     items: [
         .file(
+            path: "Tuist/ProjectDescriptionHelpers/Project+Templates.swift",
+            templatePath: "Project+Templates.stencil"
+        ),
+        .file(
             path: "Project.swift",
             templatePath: "Project.stencil"
         ),

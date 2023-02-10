@@ -15,11 +15,11 @@ let project = Project(
             bundleId: "com.runtastic.iphone.\(podName)",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
             infoPlist: .default,
-            sources:    ["Sources/Classes/**/*.{h,m,c,swift}"]
+            sources:    ["{{ name }}/Classes/**/*.{h,m,c,swift}"]
             // resources:  ["DateTools/DateTools/DateTools.bundle"],
-            // headers: .headers(
-                // public: ["DateTools/DateTools/**/*.{h}"]
-                // private: ["Sources/CocoaLumberjack/DD*Internal.{h}"]
+            headers: .headers(
+                public: ["{{ name }}/Classes/**/*.{h}"]
+                // private: ["{{ name }}/Classes/Internal/**.{h}"]
             // ),
 //            dependencies: [
 //                .pod(name: "DateTools"),
