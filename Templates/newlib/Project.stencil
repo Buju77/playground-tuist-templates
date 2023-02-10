@@ -1,12 +1,15 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
+
 import RTTuistSimplifier
 
 let podName = "{{ name }}"
 
+// 2023-02-10 TODO: extract more to RTTuistSimplifier
 let project = Project(
     name: podName,
     organizationName: "runtastic GmbH",
+    // settings: projectSettings,
     targets: [
         Target(
             name: podName,
@@ -15,15 +18,16 @@ let project = Project(
             bundleId: "com.runtastic.iphone.\(podName)",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
             infoPlist: .default,
-            sources:    ["{{ name }}/Classes/**/*.{h,m,c,swift}"]
+            sources:    ["{{ name }}/Classes/**/*.{h,m,c,swift}"],
             // resources:  ["DateTools/DateTools/DateTools.bundle"],
             headers: .headers(
-                public: ["{{ name }}/Classes/**/*.{h}"]
+                public: ["{{ name }}/Classes/**/*.{h}"]//,
                 // private: ["{{ name }}/Classes/Internal/**.{h}"]
-            // ),
-//            dependencies: [
+            ),
+            dependencies: [
 //                .pod(name: "DateTools"),
-//            ]
+            ]//,
+            // settings: targetSettings
         ),
         // uncomment when required
         Target(
@@ -47,7 +51,8 @@ let project = Project(
                 .pod(name: "DateTools"),
                 .pod(name: "Nimble"),
                 .pod(name: "OCMock")
-            ]
+            ]//,
+            // settings: unitTestsTargetSettings
         )
     ],
     schemes: [
