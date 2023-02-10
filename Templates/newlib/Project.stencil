@@ -1,0 +1,79 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+import RTTuistSimplifier
+
+let podName = "{{ name }}"
+
+let project = Project(
+    name: podName,
+    organizationName: "runtastic GmbH",
+    targets: [
+        Target(
+            name: podName,
+            platform: .iOS,
+            product: .framework,
+            bundleId: "com.runtastic.iphone.\(podName)",
+            deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+            infoPlist: .default,
+            sources:    ["Sources/Classes/**/*.{h,m,c,swift}"]
+            // resources:  ["DateTools/DateTools/DateTools.bundle"],
+            // headers: .headers(
+                // public: ["DateTools/DateTools/**/*.{h}"]
+                // private: ["Sources/CocoaLumberjack/DD*Internal.{h}"]
+            // ),
+//            dependencies: [
+//                .pod(name: "DateTools"),
+//            ]
+        ),
+        // uncomment when required
+        Target(
+            name: "UnitTests",
+            platform: .iOS,
+            product: .unitTests,
+            bundleId: "com.runtastic.iphone.UnitTests",
+            deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+            infoPlist: .default,
+            sources: [
+                SourceFileGlob.glob("UnitTests/Tests/**", excluding: [
+                    "UnitTests/Tests/Playground/**"
+                ]),
+                "UnitTests/Supporting Files/**"],
+            resources: ["UnitTests/Resources/**"],
+            headers: .headers(
+                public: ["UnitTests/Tests/**/*.h", "UnitTests/Supporting Files/*.h"]
+            ),
+            dependencies: [
+                .target(name: podName),
+                .pod(name: "DateTools"),
+                .pod(name: "Nimble"),
+                .pod(name: "OCMock")
+            ]
+        )
+    ],
+    schemes: [
+        Scheme(
+            name: podName,
+            shared: true,
+            buildAction: .buildAction(targets: [TargetReference(stringLiteral: podName)]),
+            // testAction: .targets(["UnitTests"], options: .options(coverage: true)), // uncomment if needed
+            runAction: .runAction(executable: TargetReference(stringLiteral: podName))
+        ),
+        // Scheme(
+        //     name: "UnitTests",
+        //     shared: true,
+        //     buildAction: .buildAction(targets: ["UnitTests"]),
+        //     testAction: .targets(["UnitTests"], options: .options(coverage: true)),
+        //     runAction: .runAction(executable: "UnitTests", arguments: Arguments(environment: ["RT_END_TO_END_TEST": "true"]))
+        // )
+    ],
+    additionalFiles: [
+        "Gemfile",
+        "Package.swift",
+        "Podfile",
+        "Podfile.lock",
+        "Project.swift",
+        "*.podspec",
+        .folderReference(path: "fastlane"),
+        .folderReference(path: "Tuist")
+    ]
+)

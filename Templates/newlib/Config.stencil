@@ -1,0 +1,7 @@
+import ProjectDescription
+
+let config = Config(
+   plugins: [
+        .git(url: "https://github.dev/Buju77/playground-tuist-simplifier", tag: "0.0.1"), // provides collection of all our custom ProjectDescriptionHelpers
+   ]
+)
